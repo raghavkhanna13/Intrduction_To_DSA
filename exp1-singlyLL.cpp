@@ -14,6 +14,18 @@ class Node {
         this -> data = data;    //this will pass data value in data variable 
         this -> next = NULL;    //this will make the next pointer pointing to NULL
     }
+
+    //destructor
+    ~Node(){
+        int value = this -> data;
+
+        if(this -> next != NULL){
+            delete next;
+            this -> next = NULL;
+        }
+
+        cout<<"memory is free for node with data "<<value<<endl;
+    }
 };
 
 //function for inserting element at the beginning of the linked list
@@ -59,6 +71,39 @@ void insertAtPosition(Node* &head, Node* &end, int position, int d){
     temp -> next = new_node_to_insert;
 }
 
+//deleting function by position of node in LL
+void deleteByPosition(Node* &head, Node* &end, int position){
+
+    //deleting the first / starting node
+    if(position == 1){
+        Node* temp = head;
+        head = head -> next;
+        //memory free
+        temp -> next = NULL;
+        delete temp;
+    }
+
+    //deleting the middle or last node
+    else{
+        Node* prev = NULL;
+        Node* curr = head;
+
+        int count = 1;
+        while(count < position){
+            if(count == position - 1){
+                end = curr;
+            }
+            prev = curr;
+            curr = curr -> next;
+            count++;
+        }
+
+        prev -> next = curr -> next;
+        //memory free
+        curr -> next = NULL;
+        delete curr;
+    }
+}
 
 //function created for printing the linked list(LL) from beginning till end
 void printLL(Node* &head){
@@ -87,15 +132,21 @@ int main() {
     // printLL(head);
 
     insertAtEnd(end, 13);
-    printLL(head);
+    // printLL(head);
 
     insertAtPosition(head, end, 2, 14);
-    printLL(head);
+    // printLL(head);
 
     insertAtPosition(head, end, 1, 142);
-    printLL(head);
+    // printLL(head);
 
     insertAtPosition(head, end, 6, 222);
+    printLL(head);
+    cout<<"Head = "<<head -> data<<endl;
+    cout<<"End = "<<end -> data<<endl;
+
+
+    deleteByPosition(head,end, 1);
     printLL(head);
 
     cout<<"Head = "<<head -> data<<endl;
