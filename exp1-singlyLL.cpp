@@ -90,6 +90,7 @@ void deleteByPosition(Node* &head, Node* &end, int position){
 
         int count = 1;
         while(count < position){
+            //for handling end node otherwise it will hold garbage value
             if(count == position - 1){
                 end = curr;
             }
@@ -104,6 +105,43 @@ void deleteByPosition(Node* &head, Node* &end, int position){
         delete curr;
     }
 }
+
+//deleting function by value of node in LL
+/*
+void deleteByValue(Node* &head, int value){
+    Node* temp = head;
+    int count = 0;
+    while(temp != NULL){
+        temp = temp -> next;
+        count++;
+    }
+
+    if(head -> data == value){
+        head -> next = NULL;
+        delete head;
+    }
+
+    //deleting the middle or last node
+    else{
+        Node* prev = NULL;
+        Node* curr = head;
+
+        for(int i = 0; i < count; i++){
+            prev = curr;
+            curr = curr -> next;
+            if(curr -> data == value){
+                break;
+            }
+        }
+
+        prev -> next = curr -> next;
+        //memory free
+        curr -> next = NULL;
+        delete curr;
+    }
+    
+}
+*/
 
 //function created for printing the linked list(LL) from beginning till end
 void printLL(Node* &head){
