@@ -29,17 +29,35 @@ class Node {
 };
 
 //function for inserting element at the beginning of the linked list
-void insertAtBegin(Node* &head, int d){
-    Node* new_node = new Node(d);   //new node create
-    new_node -> next = head;        //it will store the address (point new_node next pointer to the head pointer of the already existing node if there)
-    head = new_node;                //this will point head pointer to the new_node added
+void insertAtBegin(Node* &head, Node* &end, int d){
+
+    //handling the case if there is no element in Linked List
+    if(head == NULL){
+        Node* new_node = new Node(d);
+        head = new_node;
+        end = new_node;
+    }
+    else{
+        Node* new_node = new Node(d);   //new node create
+        new_node -> next = head;        //it will store the address (point new_node next pointer to the head pointer of the already existing node if there)
+        head = new_node;                //this will point head pointer to the new_node added
+    }
 }
 
 //function for inserting element at the end of the LL
-void insertAtEnd(Node* &end, int d){
-    Node* new_node = new Node(d);   //new node create
-    end -> next = new_node;         //it will store the address of new_node in its next pointer type
-    end = new_node;                 //it will point to the new_node created
+void insertAtEnd(Node* &head, Node* &end, int d){
+
+    //handling the case if there is no element in Linked List
+    if(head == NULL){
+        Node* new_node = new Node(d);
+        head = new_node;
+        end = new_node;
+    }
+    else{
+        Node* new_node = new Node(d);   //new node create
+        end -> next = new_node;         //it will store the address of new_node in its next pointer type
+        end = new_node;                 //it will point to the new_node created
+    }
 }
 
 //function for inserting element at any position of LL
@@ -48,7 +66,7 @@ void insertAtPosition(Node* &head, Node* &end, int position, int d){
 
     //for inserting element at the first position
     if(position == 1){
-        insertAtBegin(head, d);
+        insertAtBegin(head,end, d);
         return;
     }
 
@@ -61,7 +79,7 @@ void insertAtPosition(Node* &head, Node* &end, int position, int d){
 
     //for updating the value of end node and inserting at end
     if(temp -> next == NULL){
-        insertAtEnd(end, d);
+        insertAtEnd(head, end, d);
         return;
     }
 
@@ -108,36 +126,27 @@ void deleteByPosition(Node* &head, Node* &end, int position){
 
 //deleting function by value of node in LL
 /*
-void deleteByValue(Node* &head, int value){
-    Node* temp = head;
-    int count = 0;
-    while(temp != NULL){
-        temp = temp -> next;
-        count++;
-    }
-
+void deleteByValue(Node* &head, Node* &end, int value){
     if(head -> data == value){
-        head -> next = NULL;
-        delete head;
+        Node* temp = head;
+        head = temp -> next;
+        temp -> next = NULL;
+        delete temp;
+         
     }
-
-    //deleting the middle or last node
     else{
-        Node* prev = NULL;
-        Node* curr = head;
 
-        for(int i = 0; i < count; i++){
-            prev = curr;
-            curr = curr -> next;
-            if(curr -> data == value){
+        Node* temp = head;
+        int position = 1;
+        while(temp != NULL){
+            if(temp -> data == value){
                 break;
             }
+            temp = temp -> next;
+            position++;
         }
 
-        prev -> next = curr -> next;
-        //memory free
-        curr -> next = NULL;
-        delete curr;
+        deleteByPosition(head, end, position);
     }
     
 }
@@ -166,10 +175,10 @@ int main() {
     Node* end = new_node;   //end pointing to new_node
     // printLL(head);
 
-    insertAtEnd(end, 23);
+    insertAtEnd(head, end, 23);
     // printLL(head);
 
-    insertAtEnd(end, 13);
+    insertAtEnd(head, end, 13);
     // printLL(head);
 
     insertAtPosition(head, end, 2, 14);
@@ -183,9 +192,11 @@ int main() {
     cout<<"Head = "<<head -> data<<endl;
     cout<<"End = "<<end -> data<<endl;
 
-
-    deleteByPosition(head,end, 1);
+    deleteByPosition(head, end, 1);
     printLL(head);
+
+    // deleteByValue(head,end, 222);
+    // printLL(head);
 
     cout<<"Head = "<<head -> data<<endl;
     cout<<"End = "<<end -> data<<endl;
