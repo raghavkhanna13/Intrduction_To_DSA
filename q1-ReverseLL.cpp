@@ -30,6 +30,25 @@ void insertAtEnd(Node* &head, Node* &end, int d){
     }
 }
 
+//recursive approach
+Node* reverse2(Node* &head){
+    if(head == NULL || head -> next == NULL){
+        return head;
+    }
+
+    Node* result = reverse2(head -> next);
+    head -> next -> next = head;
+    head -> next = NULL;
+
+    return result;
+
+    /*
+        Time Complexity = O(n)
+        Space Complexity = O(n)
+    */
+}
+
+//iterative approach
 Node* reverse(Node* &head){
     Node* prev = NULL;
     Node* curr = head;
@@ -47,6 +66,10 @@ Node* reverse(Node* &head){
     return curr;
 
     // return head;
+    /*
+        Time Complexity = O(n)
+        Space Complexity = O(1)
+    */
 }
 
 void display(Node* &head){
@@ -72,7 +95,7 @@ int main(){
 
     display(head);
 
-    Node* ans = reverse(head);
+    Node* ans = reverse2(head);
 
     display(ans);
 
