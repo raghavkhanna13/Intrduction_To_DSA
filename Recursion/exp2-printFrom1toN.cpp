@@ -25,9 +25,8 @@ void printReverseB(int i,int n){
     if(i > n)
     return ;
 
-    count++;
     printReverseB(i+1,n);
-    // count++;
+
     cout<<i<<" ";
 }
 
