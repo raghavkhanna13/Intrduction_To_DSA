@@ -19,5 +19,5 @@ public class fibonacciSeries {
 }
 /*
  Time complexity = O(2^n) exponential
- Space complexity = O(2^n) exponential
+ Space complexity = O(n)
  */
