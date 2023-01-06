@@ -46,6 +46,40 @@ public class creationOfBinaryTree {
         }
     }
 
+    static void inorderTraversal(Node root){
+        //LNR
+        //base case
+        if(root == null){
+            return;
+        }
+
+        inorderTraversal(root.left);
+        System.out.print(root.data + " ");
+        inorderTraversal(root.right);
+    }
+    static void preorderTraversal(Node root){
+        //NLR
+        //base case
+        if(root == null){
+            return;
+        }
+
+        System.out.print(root.data + " ");
+        preorderTraversal(root.left);
+        preorderTraversal(root.right);
+    }
+    static void postorderTraversal(Node root){
+        //LRN
+        //base case
+        if(root == null){
+            return;
+        }
+
+        postorderTraversal(root.left);
+        postorderTraversal(root.right);
+        System.out.print(root.data + " ");
+    }
+
     static Node buildTree(Node root) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter the data: ");
@@ -65,10 +99,44 @@ public class creationOfBinaryTree {
 
     }
 
+    static Node buildFromLevelOrder(Node root){
+        Queue<Node> q = new LinkedList<>();
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter the root data: ");
+        int data = sc.nextInt();
+        root = new Node(data);
+        q.add(root);
+
+        while(!q.isEmpty()){
+            Node temp = q.peek();
+            q.remove();
+
+            System.out.println("Enter the left node for " + temp.data);
+            int leftData = sc.nextInt();
+
+            if(leftData != -1){
+                temp.left = new Node(leftData);
+                q.add(temp.left);
+            }
+
+            System.out.println("Enter the right node for " + temp.data);
+            int rightData = sc.nextInt();
+
+            if(rightData != -1){
+                temp.right = new Node(rightData);
+                q.add(temp.right);
+            }
+        }
+        sc.close();
+        return root;
+
+    }
+
     public static void main(String[] args) {
 
         Node root = null;
-        root = buildTree(root);
+        // root = buildTree(root);
+        root = buildFromLevelOrder(root);
 
         System.out.println("Level order traversal: ");
         // level order traversal
@@ -76,5 +144,21 @@ public class creationOfBinaryTree {
 
         // input
         // 1 3 7 -1 -1 11 -1 -1 5 17 -1 -1 -1
+
+         
+        //inorder
+        // System.out.println("Inorder: ");
+        // inorderTraversal(root);
+        // System.out.println();
+        // //preorder
+        // System.out.println("preorder: ");
+        // preorderTraversal(root);
+        
+        // System.out.println();
+        // //postorder
+        // System.out.println("postorder: ");
+        // postorderTraversal(root);
+        // System.out.println();
+        
     }
 }
