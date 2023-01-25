@@ -88,6 +88,53 @@ public class binaryTress {
         return result;
     }
 
+    static List<Integer> iterativeInorder(TreeNode root){
+        List<Integer> result = new ArrayList<>();
+        Stack<TreeNode> st = new Stack<>();
+        TreeNode node = root;
+        while(true){
+            if(node != null){
+                st.push(node);
+                node = node.left;
+            }
+            else{
+                if(st.isEmpty()){
+                    break;
+                }
+                node = st.pop();
+                result.add(node.data);
+                node = node.right;
+
+            }
+        }
+
+        return result;
+    }
+
+    static List<Integer> iterativePostOrder(TreeNode root){
+        List<Integer> result = new ArrayList<>();
+        Stack<TreeNode> st1 = new Stack<>();
+        Stack<TreeNode> st2 = new Stack<>();
+
+        st1.push(root);
+        while(!st1.isEmpty()){
+            root = st1.pop();
+            st2.push(root);
+            if(root.left != null){
+                st1.push(root.left);
+            }
+            if(root.right != null){
+                st1.push(root.right);
+            }
+        }
+
+        while(!st2.isEmpty()){
+            result.add(st2.pop().data);
+        }
+
+        return result;
+    }
+
 
     static void display(List<List<Integer>> ans){
         for(int i = 0; i < ans.size(); i++){
@@ -113,8 +160,9 @@ public class binaryTress {
         // inorder(root);
         // System.out.println();
         // postorder(root);
+        // System.out.println();
 
-        display(levelOrder(root));
-        display1(iterativePreOrder(root));
+        // display(levelOrder(root));
+        display1(iterativePostOrder(root));
     }
 }
